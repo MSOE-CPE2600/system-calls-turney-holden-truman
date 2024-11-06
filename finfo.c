@@ -1,4 +1,5 @@
 /**********************************
+* CPE 2600 121 Lab 9: System Calls
 * Filename: finfo.c
 * Description: Program prints information about a file inputted via command line using system calls
 *
@@ -27,7 +28,7 @@ int main(int argc, char* argv[])
 
     if (stat(argv[1], &statbuf) == -1) {
         perror("stat");
-        return -1;
+        exit(-1);
     }
 
     if (S_ISREG(statbuf.st_mode)) {
