@@ -15,11 +15,17 @@
 int main(int argc, char* argv[])
 {
     //time of day
-    struct timespec start;
-    if (clock_gettime(CLOCK_REALTIME, &start) != 0) {
+    struct timespec currentTime;
+    if (clock_gettime(CLOCK_REALTIME, &currentTime) != 0) {
         perror("clock_gettime");
+    }
+
+    struct tm *localTime = localtime(&currentTime.tv_sec);
+    if (localTime == NULL) {
+        perror("localtime");
+        return 1;
     } else {
-        printf("Current time of day in ns: %lld\n", (start.tv_sec * 1000000000LL + start.tv_nsec));
+        printf("Current time of day in ns: %lld\n", (((localTime->tm_hour * 60L * 60L) + (localTime->tm_min * 60L) + localTime->tm_sec) * 1000000000LL + currentTime.tv_nsec));
     }
 
     //network name
